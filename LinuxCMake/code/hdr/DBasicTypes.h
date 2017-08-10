@@ -16,7 +16,9 @@
 #include <memory>
 #include <map>
 #include <sstream>
-
+#ifndef WIN32 //  ======================================================================== [ not WINDOWS ] =============================  //
+#include <stdint.h> ///< Using [basictype]_fast[minsize]_t
+#endif //  =========================================================================== [ end not WINDOWS ] =============================  //
 #include <glm/gtc/type_ptr.hpp>
 
 //// ---- Namespaces ---- ////
@@ -43,7 +45,7 @@ using pxUniquePtr = std::unique_ptr<T>;
 template<class T>
 using pxSharedPtr = std::shared_ptr<T>;
 
-using GLvramLocation = pxUInt;		/// Used for OpenGL bindings
+using GLvramLocation = GLuint;		/// Used for OpenGL bindings
 
 using pxVec2i = glm::i32vec2;		/// Signed 32*2b integer vector
 using pxVec2f = glm::f32vec2;		/// Signed 32*2b floating-point vector
