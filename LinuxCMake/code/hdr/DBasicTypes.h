@@ -18,8 +18,10 @@
 #include <sstream>
 #ifndef WIN32 //  ======================================================================== [ not WINDOWS ] =============================  //
 #include <stdint.h> ///< Using [basictype]_fast[minsize]_t
+#define GLM_FORCE_RADIANS
 #endif //  =========================================================================== [ end not WINDOWS ] =============================  //
 #include <glm/gtc/type_ptr.hpp>
+#include <GL/glew.h>
 
 //// ---- Namespaces ---- ////
 ///* Substitution Aliases */
@@ -27,6 +29,8 @@ using pxBool = bool;				/// 1b boolean GL_TRUE or GL_FALSE
 using pxInt16 = int_fast16_t;		/// Signed 16b integer [-32 768,  32 767]
 using pxUInt16 = uint_fast16_t;		/// Unsigned 16b integer [0,  65 535]
 using pxInt = int_fast32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647]
+using pxInt32 = int32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647]
+using pxUInt32 = uint32_t;		/// Unsigned 32b integer [0,  4 294 967 295]
 using pxUInt = uint_fast32_t;		/// Unsigned 32b integer [0,  4 294 967 295]
 using pxInt64 = int_fast64_t;		/// Signed 64b integer [-9 223 372 036 854 775 808,  9 223 372 036 854 775 807]
 using pxUInt64 = uint_fast64_t;		/// Unsigned 64b integer [0,  18 446 744 073 709 551 615]
@@ -44,6 +48,18 @@ template<class T>
 using pxUniquePtr = std::unique_ptr<T>;
 template<class T>
 using pxSharedPtr = std::shared_ptr<T>;
+
+#ifndef WIN32
+template<typename T, typename... Args>
+std::unique_ptr<T> createUniquePtr(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+#else
+template<typename T, typename... Args>
+std::unique_ptr<T> createUniquePtr(Args&&... args) {
+    return std::make_unique<T>(std::forward<Args>(args)...);
+}
+#endif
 
 using GLvramLocation = GLuint;		/// Used for OpenGL bindings
 

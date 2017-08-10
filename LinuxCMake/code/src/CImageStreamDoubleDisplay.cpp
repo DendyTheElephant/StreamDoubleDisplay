@@ -55,7 +55,7 @@ namespace PixPhetamine2D {
 		m_GLContext = SDL_GL_CreateContext(m_upSDLWindow2);
 
 		/* Enable vertical synchronization */
-		//SDL_GL_SetSwapInterval(1); 
+		//SDL_GL_SetSwapInterval(1);
 
 		STACK_MESSAGE("Checking for OpenGL errors");
 		Utility::UErrorHandler::checkOpenGLErrors();
@@ -84,7 +84,7 @@ namespace PixPhetamine2D {
 		std::cerr << "    Shading: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;
 		std::cerr << ">GPU Specifications for modern GLSL:" << std::endl;
-		pxInt uboBindings, uboSize, uboVertex, uboFragment, uboGeometry;
+		GLint uboBindings, uboSize, uboVertex, uboFragment, uboGeometry;
 		glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &uboBindings);
 		glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &uboSize);
 		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &uboVertex);
@@ -97,7 +97,7 @@ namespace PixPhetamine2D {
 		std::cerr << "  Max uniform block geometry: " << uboGeometry << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;
 		std::cerr << ">Texture specifications:" << std::endl;
-		pxInt texUnits;
+		GLint texUnits;
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &texUnits);
 		std::cerr << "     Max texture image units: " << texUnits << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;
@@ -125,7 +125,7 @@ namespace PixPhetamine2D {
 	///
 	//----------------------------------------------------------------------------------------------------------------------------------------//
 	CImageStreamDoubleDisplay::CImageStreamDoubleDisplay(
-			pxString a_Windows1Caption, pxUInt a_Windows1Width,	pxUInt a_Windows1Height, 
+			pxString a_Windows1Caption, pxUInt a_Windows1Width,	pxUInt a_Windows1Height,
 			pxString a_Windows2Caption, pxUInt a_Windows2Width, pxUInt a_Windows2Height
 	) :
 		m_Windows1Caption(a_Windows1Caption),
@@ -157,21 +157,21 @@ namespace PixPhetamine2D {
 			"    outColor = texture(streammed_image, texCoord);\n"
 			"}\n";
 
-		m_upShader = std::make_unique<LowLevelWrapper::CShader>("VertexShader", vertexShaderCode, "FragmentShader", fragmentShaderCode);
-		m_upMainRender = std::make_unique<PostProcess::CPostProcessPass>(m_upShader.get());
-		m_upTexture = std::make_unique<LowLevelWrapper::CTexture>(m_StreamWidth, m_StreamHeight, LowLevelWrapper::CTexture::ETextureType::NORMAL, false);
+		m_upShader = createUniquePtr<LowLevelWrapper::CShader>("VertexShader", vertexShaderCode, "FragmentShader", fragmentShaderCode);
+		m_upMainRender = createUniquePtr<PostProcess::CPostProcessPass>(m_upShader.get());
+		m_upTexture = createUniquePtr<LowLevelWrapper::CTexture>(m_StreamWidth, m_StreamHeight, LowLevelWrapper::CTexture::ETextureType::NORMAL, false);
 
 		m_upMainRender->bindTexture(m_upTexture.get(), "streammed_image", 0);
 		m_upMainRender->bindVariableName("screen_width");
 		m_upMainRender->bindVariableName("screen_height");
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////  ================================================================================================================================  ////
 	////    ---- Core -----                                                                                                                 ////
 	////  ================================================================================================================================  ////
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	//----------------------------------------------------------------------------------------------------------------------------------------//
 	///
 	//----------------------------------------------------------------------------------------------------------------------------------------//
@@ -195,7 +195,7 @@ namespace PixPhetamine2D {
 		m_upMainRender.get()->process();
 		SDL_GL_SwapWindow(m_upSDLWindow2);
 
-		
+
 		// ---- FPS update -----
 #ifdef DEBUG //  ============================================================================= [ DEBUG ] =======================================  //
 		if (m_RefreshFPSTimer.getElapsedMiliseconds() > m_RefreshFPSPeriod) {

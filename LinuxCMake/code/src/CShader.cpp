@@ -50,7 +50,7 @@ namespace PixPhetamine2D {
 
 			// Vertex compilation
 			const char * vertexCode = a_vertexCode.c_str();
-			pxInt vertexCodeLength = (pxInt)a_vertexCode.length();
+			GLint vertexCodeLength = (pxInt)a_vertexCode.length();
 			glShaderSource(vertexId, 1, &vertexCode, &vertexCodeLength);
 			std::cerr << "Compilation of Vertex shader " << m_vertexFilePath.c_str() << ":";
 			glCompileShader(vertexId);
@@ -58,7 +58,7 @@ namespace PixPhetamine2D {
 
 			// Fragment compilation
 			const char * fragmentCode = a_fragmentCode.c_str();
-			pxInt fragmentCodeLength = (pxInt)a_fragmentCode.length();
+			GLint fragmentCodeLength = (pxInt)a_fragmentCode.length();
 			glShaderSource(fragmentId, 1, &fragmentCode, &fragmentCodeLength);
 			std::cerr << "Compilation of Fragment shader " << m_fragmentFilePath.c_str() << ":";
 			glCompileShader(fragmentId);
@@ -94,7 +94,7 @@ namespace PixPhetamine2D {
 			if (m_isRealodable) {
 				load(getCode(m_vertexFilePath.c_str()), getCode(m_fragmentFilePath.c_str()));
 			}
-			
+
 			UNSTACK_TRACE;
 		}
 
@@ -102,8 +102,8 @@ namespace PixPhetamine2D {
 		void CShader::checkCompilation(pxUInt a_shaderId) const {
 			// check if the compilation was successfull (and display syntax errors)
 			// call it after each shader compilation
-			pxInt result = GL_FALSE;
-			pxInt infoLogLength;
+			GLint result = GL_FALSE;
+			GLint infoLogLength;
 
 			glGetShaderiv(a_shaderId, GL_COMPILE_STATUS, &result);
 			glGetShaderiv(a_shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
@@ -124,8 +124,8 @@ namespace PixPhetamine2D {
 		void CShader::checkLinks(pxUInt a_programId) const {
 			// check if links were successfull (and display errors)
 			// call it after linking the program
-			pxInt result = GL_FALSE;
-			pxInt infoLogLength;
+			GLint result = GL_FALSE;
+			GLint infoLogLength;
 
 			glGetProgramiv(a_programId, GL_LINK_STATUS, &result);
 			glGetProgramiv(a_programId, GL_INFO_LOG_LENGTH, &infoLogLength);

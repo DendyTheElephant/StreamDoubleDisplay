@@ -12,7 +12,7 @@
 #include "CTimer.h"
 
 /* Entry point */
-pxInt main(pxInt argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 
 // If in debug mode, print cerr in console, else in log.txt
 #ifndef DEBUG //  ======================================================================== [ not DEBUG ] =======================================  //
@@ -44,8 +44,13 @@ pxInt main(pxInt argc, char *argv[]) {
 	PadPhetamine::CInputHandler* inputHandler = new PadPhetamine::CInputHandler(displayer->getWindow1());
 
 	// -- Load a texture in RAM
-	SDL_Surface *image = IMG_Load("C:/Users/dendy/Documents/Visual Studio 2015/Projects/PixPhetamine2D/Dendy2.png");
-
+	SDL_Surface *image = IMG_Load("../Dendy2.png");
+	
+	if (image == nullptr) {
+		ERROR("Can't load the image ../Dendy2.png!");
+	}
+		
+	
 	int x = 0, y = 0;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
