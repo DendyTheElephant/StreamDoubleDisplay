@@ -13,7 +13,7 @@ namespace PixPhetamine2D {
 			m_height = a_height;
 
 			GLenum format, dataType;
-			GLint internalFormat, filtering;
+			pxInt32 internalFormat, filtering;
 
 			(a_willBeMultisampled) ? m_target = GL_TEXTURE_2D_MULTISAMPLE : m_target = GL_TEXTURE_2D;
 

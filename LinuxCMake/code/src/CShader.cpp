@@ -28,7 +28,7 @@ namespace PixPhetamine2D {
 		void CShader::checkContext() const {
 			// Verify that the current binded shader is this one! (To optimise performance, prefer not to switch between shaders)
 			// Active the shader before sending textures...
-			GLint currentShader;
+			pxInt32 currentShader;
 			glGetIntegerv(GL_CURRENT_PROGRAM, &currentShader);
 			if (currentShader != m_id) {
 				glUseProgram(m_id);
@@ -50,7 +50,7 @@ namespace PixPhetamine2D {
 
 			// Vertex compilation
 			const char * vertexCode = a_vertexCode.c_str();
-			GLint vertexCodeLength = (pxInt)a_vertexCode.length();
+			pxInt32 vertexCodeLength = (pxInt)a_vertexCode.length();
 			glShaderSource(vertexId, 1, &vertexCode, &vertexCodeLength);
 			std::cerr << "Compilation of Vertex shader " << m_vertexFilePath.c_str() << ":";
 			glCompileShader(vertexId);
@@ -58,7 +58,7 @@ namespace PixPhetamine2D {
 
 			// Fragment compilation
 			const char * fragmentCode = a_fragmentCode.c_str();
-			GLint fragmentCodeLength = (pxInt)a_fragmentCode.length();
+			pxInt32 fragmentCodeLength = (pxInt)a_fragmentCode.length();
 			glShaderSource(fragmentId, 1, &fragmentCode, &fragmentCodeLength);
 			std::cerr << "Compilation of Fragment shader " << m_fragmentFilePath.c_str() << ":";
 			glCompileShader(fragmentId);
@@ -102,8 +102,8 @@ namespace PixPhetamine2D {
 		void CShader::checkCompilation(pxUInt a_shaderId) const {
 			// check if the compilation was successfull (and display syntax errors)
 			// call it after each shader compilation
-			GLint result = GL_FALSE;
-			GLint infoLogLength;
+			pxInt32 result = GL_FALSE;
+			pxInt32 infoLogLength;
 
 			glGetShaderiv(a_shaderId, GL_COMPILE_STATUS, &result);
 			glGetShaderiv(a_shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
@@ -124,8 +124,8 @@ namespace PixPhetamine2D {
 		void CShader::checkLinks(pxUInt a_programId) const {
 			// check if links were successfull (and display errors)
 			// call it after linking the program
-			GLint result = GL_FALSE;
-			GLint infoLogLength;
+			pxInt32 result = GL_FALSE;
+			pxInt32 infoLogLength;
 
 			glGetProgramiv(a_programId, GL_LINK_STATUS, &result);
 			glGetProgramiv(a_programId, GL_INFO_LOG_LENGTH, &infoLogLength);

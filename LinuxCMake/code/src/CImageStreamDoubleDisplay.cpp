@@ -84,7 +84,7 @@ namespace PixPhetamine2D {
 		std::cerr << "    Shading: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;
 		std::cerr << ">GPU Specifications for modern GLSL:" << std::endl;
-		GLint uboBindings, uboSize, uboVertex, uboFragment, uboGeometry;
+		pxInt32 uboBindings, uboSize, uboVertex, uboFragment, uboGeometry;
 		glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, &uboBindings);
 		glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &uboSize);
 		glGetIntegerv(GL_MAX_VERTEX_UNIFORM_BLOCKS, &uboVertex);
@@ -97,7 +97,7 @@ namespace PixPhetamine2D {
 		std::cerr << "  Max uniform block geometry: " << uboGeometry << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;
 		std::cerr << ">Texture specifications:" << std::endl;
-		GLint texUnits;
+		pxInt32 texUnits;
 		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &texUnits);
 		std::cerr << "     Max texture image units: " << texUnits << std::endl;
 		std::cerr << "----------------------------------------------------------------" << std::endl;

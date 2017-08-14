@@ -53,6 +53,6 @@ endif()
 
 include_directories(${HEADERS_DIR})
 
-add_definitions( -DEBUG )
+add_definitions( -DDEBUG=1 )
 
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${SHADER_FILES})

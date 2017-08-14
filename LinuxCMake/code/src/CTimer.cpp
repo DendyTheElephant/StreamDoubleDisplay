@@ -13,10 +13,7 @@ namespace CommonPhetamine {
 	/// And updates the start tick value.
 	//----------------------------------------------------------------------------------------------------------------------------------------//
 	void CTimer::_updateElapsedTicks() {
-		//if (m_isHightPerformanceClockIsSteady)
-		//	m_elapsedTicks += std::chrono::high_resolution_clock::now() - m_startTicks;
-		//else
-			m_elapsedTicks += std::chrono::steady_clock::now() - m_startTicks;
+		m_elapsedTicks += std::chrono::steady_clock::now() - m_startTicks;
 		_updateStartTicks();
 	}
 
@@ -24,10 +21,7 @@ namespace CommonPhetamine {
 	/// Sets start ticks to current tick value using the consistent clock.
 	//----------------------------------------------------------------------------------------------------------------------------------------//
 	void CTimer::_updateStartTicks() {
-		//if (m_isHightPerformanceClockIsSteady)
-		//	m_startTicks = std::chrono::high_resolution_clock::now();
-		//else
-			m_startTicks = std::chrono::steady_clock::now();
+		m_startTicks = std::chrono::steady_clock::now();
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,10 +128,6 @@ namespace CommonPhetamine {
 		_updateStartTicks();
 		// Elapsed ticks are now reset:
 		m_elapsedTicks = std::chrono::duration<double>(0);
-		/*if (m_isHightPerformanceClockIsSteady)
-			m_elapsedTicks = std::chrono::high_resolution_clock::now() - m_startTicks;
-		else
-			m_elapsedTicks = std::chrono::steady_clock::now() - m_startTicks;*/
 	}
 
 	//----------------------------------------------------------------------------------------------------------------------------------------//

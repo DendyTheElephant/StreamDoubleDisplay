@@ -26,14 +26,14 @@
 //// ---- Namespaces ---- ////
 ///* Substitution Aliases */
 using pxBool = bool;				/// 1b boolean GL_TRUE or GL_FALSE
-using pxInt16 = int_fast16_t;		/// Signed 16b integer [-32 768,  32 767]
-using pxUInt16 = uint_fast16_t;		/// Unsigned 16b integer [0,  65 535]
-using pxInt = int_fast32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647]
-using pxInt32 = int32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647]
-using pxUInt32 = uint32_t;		/// Unsigned 32b integer [0,  4 294 967 295]
-using pxUInt = uint_fast32_t;		/// Unsigned 32b integer [0,  4 294 967 295]
-using pxInt64 = int_fast64_t;		/// Signed 64b integer [-9 223 372 036 854 775 808,  9 223 372 036 854 775 807]
-using pxUInt64 = uint_fast64_t;		/// Unsigned 64b integer [0,  18 446 744 073 709 551 615]
+using pxInt16 = int_fast16_t;		/// Signed 16b integer [-32 768,  32 767] at least! (can be more if faster on system)
+using pxUInt16 = uint_fast16_t;		/// Unsigned 16b integer [0,  65 535] at least! (can be more if faster on system)
+using pxInt = int_fast32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647] at least! (can be more if faster on system)
+using pxInt32 = int32_t;			/// Signed 32b integer [-2 147 483 648,  2 147 483 647] STRICT (usefull for third party libs)
+using pxUInt32 = uint32_t;		    /// Unsigned 32b integer [0,  4 294 967 295] STRICT (usefull for third party libs)
+using pxUInt = uint_fast32_t;		/// Unsigned 32b integer [0,  4 294 967 295] at least! (can be more if faster on system)
+using pxInt64 = int_fast64_t;		/// Signed 64b integer [-9 223 372 036 854 775 808,  9 223 372 036 854 775 807] at least! (can be more if faster on system)
+using pxUInt64 = uint_fast64_t;		/// Unsigned 64b integer [0,  18 446 744 073 709 551 615] at least! (can be more if faster on system)
 using pxFloat = float;				/// Signed 32b floating-point
 using pxFloat64 = double;			/// Signed 64b floating-point
 
@@ -49,17 +49,17 @@ using pxUniquePtr = std::unique_ptr<T>;
 template<class T>
 using pxSharedPtr = std::shared_ptr<T>;
 
-#ifndef WIN32
+#ifndef WIN32 //  ============================================================================ [ WINDOWS ] =============================  //
 template<typename T, typename... Args>
 std::unique_ptr<T> createUniquePtr(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
-#else
+#else //  ================================================================================ [ not WINDOWS ] =============================  //
 template<typename T, typename... Args>
 std::unique_ptr<T> createUniquePtr(Args&&... args) {
     return std::make_unique<T>(std::forward<Args>(args)...);
 }
-#endif
+#endif //  =========================================================================== [ end not WINDOWS ] =============================  //
 
 using GLvramLocation = GLuint;		/// Used for OpenGL bindings
 

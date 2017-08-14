@@ -6,10 +6,10 @@ namespace PixPhetamine2D {
 
 	namespace PostProcess {
 
-		void CPostProcessPass::checkContext() const { 
+		void CPostProcessPass::checkContext() const {
 			// Verify that the current binded shader is this one! (To optimise performance, prefer not to switch between shaders)
 			// Active the shader with activate(); before sending textures...
-			GLint currentShader, currentFBOOut;
+			pxInt32 currentShader, currentFBOOut;
 			glGetIntegerv(GL_CURRENT_PROGRAM, &currentShader);
 			if (currentShader != m_shader->id()) {
 				glUseProgram(m_shader->id());
@@ -22,14 +22,14 @@ namespace PixPhetamine2D {
 			else {
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			}
-			
+
 		}
 
 		void CPostProcessPass::bindTexture(LowLevelWrapper::CTexture* a_textureToBind, const char* a_correspondingVariableNameInShader, pxUInt16 a_location) {
 			STACK_TRACE;
-			
+
 			checkContext();
-			
+
 			// Send it to the shader
 			m_shader->bindVariableName(a_correspondingVariableNameInShader);
 			glUniform1i(m_shader->getVariableAttachment(a_correspondingVariableNameInShader), a_location);
@@ -81,7 +81,7 @@ namespace PixPhetamine2D {
 			glBindVertexArray(m_quad.getVAO());
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			glBindVertexArray(0);
- 
+
 			// Unbind the shader
 			glUseProgram(0);
 
